@@ -1,35 +1,39 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
+namespace Database\Seeders;
 
-return new class extends Migration
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+
+class StokSeeder extends Seeder
 {
     /**
-     * Run the migrations.
+     * Run the database seeds.
      */
-    public function up(): void
+    public function run(): void
     {
-        Schema::create('t_stok', function (Blueprint $table) {
-            $table->id('stok_id');
-            $table->unsignedBigInteger('barang_id');
-            $table->unsignedBigInteger('user_id');
-            $table->datetime('stok_tanggal');
-            $table->integer('stok_jumlah')->nullable();
-            $table->timestamps();
+        // Get the barang IDs from the m_barang table
+        $barangIds = DB::table('m_barang')->pluck('barang_id');
 
-            // Define foreign keys
-            $table->foreign('barang_id')->references('barang_id')->on('m_barang');
-            $table->foreign('user_id')->references('user_id')->on('m_user');
-        });
-    }
+        // Initialize an empty array to store the stock data
+        $stockData = [];
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
-    {
-        Schema::dropIfExists('t_stok');
+        // Generate stock data for each barang
+        foreach ($barangIds as $barangId) {
+            // Generate random stock quantity for each barang
+            $stokJumlah = rand(50, 200);
+
+            // Add the stock data to the array
+            $stockData[] = [
+                'barang_id' => $barangId,
+                'stok_jumlah' => $stokJumlah,
+                'stok_tanggal' => now(), // Assuming the current date and time
+                'created_at' => now(),
+                'updated_at' => now(),
+            ];
+        }
+
+        // Insert the stock data into the t_stok table
+        DB::table('t_stok')->insert($stockData);
     }
-};
+}
