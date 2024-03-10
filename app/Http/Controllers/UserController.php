@@ -10,22 +10,28 @@ class UserController extends Controller
 {
     public function index()
     {
+        $user = UserModel::findOr(20, ['username', 'nama'], function () {
+            abort(404);
+        });
 
-        $data = [
-            'level_id' => 2,
-            'username' => 'manager_tiga',
-            'nama' => 'Manager 3',
-            'password' => Hash::make('12345')
-        ];
+        return view('user', ['data' => $user]);
+        // $user = UserModel::firstWhere('level_id', 1)->first();
+        // $user = UserModel::find(1);
+        // $data = [
+        //     'level_id' => 2,
+        //     'username' => 'manager_tiga',
+        //     'nama' => 'Manager 3',
+        //     'password' => Hash::make('12345')
+        // ];
 
-        // Tambahkan data pengguna baru ke dalam tabel m_user
-        UserModel::create($data);
+        // // Tambahkan data pengguna baru ke dalam tabel m_user
+        // UserModel::create($data);
 
-        // Ambil semua data pengguna dari tabel m_user
-        $users = UserModel::all();
+        // // Ambil semua data pengguna dari tabel m_user
+        // $users = UserModel::all();
 
-        // Kirim data pengguna ke view 'user'
-        return view('user', ['data' => $users]);
+        // // Kirim data pengguna ke view 'user'
+        // return view('user', ['data' => $users]);
 
 
         // // Update data user dengan Eloquent Model
