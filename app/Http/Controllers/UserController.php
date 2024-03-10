@@ -10,13 +10,21 @@ class UserController extends Controller
 {
     public function index()
     {
-        $userCount = UserModel::where('level_id', 2)->count(); 
-        $users = UserModel::where('level_id', 2)->get(); // mengambil semua data pengguna dengan level_id 2
-        return view('user', ['data' => $users, 'userCount' => $userCount]); 
+        $user = UserModel::firstOrNew(
+            [
+                'username' => 'manager33',
+                'nama' => 'Manager Tiga Tiga',
+                'password' => Hash::make('12345'),
+                'level_id' => 2
+            ]
+        );
+        // $user->save();
+        return view('user', ['data' => $user]);
     }
 }
 
-
+// $userCount = UserModel::where('level_id', 2)->count(); 
+// $users = UserModel::where('level_id', 2)->get(); // mengambil semua data pengguna dengan level_id 2
 // $user = UserModel::where('username', 'manager9')->firstOrFail();
 // $user = UserModel::findOr(20, ['username', 'nama'], function () {
 //     abort(404);
