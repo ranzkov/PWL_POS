@@ -371,6 +371,12 @@ return [
                 ],
             ],
         ],
+        [
+            'text' => 'Kategori',
+            'url' => '/kategori',
+            'icon' => 'fas fa-fw fa-layer-group',
+        ],
+        
         ['header' => 'labels'],
         [
             'text' => 'important',
@@ -387,6 +393,13 @@ return [
             'icon_color' => 'cyan',
             'url' => '#',
         ],
+        [
+            'text' => 'Kategori',
+            'url' => '/kategori',
+            'icon' => 'fas fa-fw fa-layer-group',
+        ]
+        
+        
     ],
 
     /*
@@ -457,6 +470,7 @@ return [
                     'asset' => false,
                     'location' => '//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.css',
                 ],
+                
             ],
         ],
         'Chartjs' => [

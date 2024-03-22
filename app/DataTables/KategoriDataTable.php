@@ -8,8 +8,6 @@ use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
-use Yajra\DataTables\Html\Editor\Editor;
-use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
 class KategoriDataTable extends DataTable
@@ -22,8 +20,19 @@ class KategoriDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            /* ->addColumn('action', 'kategori.action') */
+            ->addColumn('action', function ($data) {
+                return '<a href="kategori/edit/' . $data->kategori_id . '" class="btn btn-sm btn-primary mr-1">
+                    <i class="fas fa-edit"></i>
+                </a>
+                <form action="kategori/delete/' . $data->kategori_id . '" method="POST" style="display:inline">
+                    ' . csrf_field() . '
+                    ' . method_field('DELETE') . '
+                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm(\'Are you sure you want to delete this item?\')">
+                    <i class="fas fa-trash"></i></button>
+                </form>';
+            })
             ->setRowId('id');
+
     }
 
     /**
@@ -43,7 +52,6 @@ class KategoriDataTable extends DataTable
             ->setTableId('kategori-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
-            //->dom('Bfrtip')
             ->orderBy(1)
             ->selectStyleSingle()
             ->buttons([
@@ -52,7 +60,8 @@ class KategoriDataTable extends DataTable
                 Button::make('pdf'),
                 Button::make('print'),
                 Button::make('reset'),
-                Button::make('reload')
+                Button::make('reload'),
+                Button::make('add'),
             ]);
     }
 
@@ -62,16 +71,17 @@ class KategoriDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            /* Column::computed('action')
-                ->exportable(false)
-                ->printable(false)
-                ->width(60)
-                ->addClass('text-center'), */
             Column::make('kategori_id'),
             Column::make('kategori_kode'),
             Column::make('kategori_nama'),
             Column::make('created_at'),
             Column::make('updated_at'),
+            Column::computed('action')
+                ->exportable(false)
+                ->printable(false)
+                ->width(60)
+                ->addClass('text-center')
+                ->title('Actions'),
         ];
     }
 

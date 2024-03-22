@@ -20,3 +20,8 @@ Route::get('/user/hapus/{id}', [UserController::class, 'hapus']);
 Route::get('/kategori', [KategoriController::class, 'index']);
 Route::get('/kategori/create', [KategoriController::class, 'create']);
 Route::post('/kategori', [KategoriController::class, 'store']);
+Route::get('/kategori/edit/{id}', [KategoriController::class, 'edit']);
+Route::put('/kategori/edit_simpan/{id}', [KategoriController::class, 'edit_simpan']);
+Route::delete('/kategori/delete/{id}', [KategoriController::class, 'delete']);
+
+
