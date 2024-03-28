@@ -19,10 +19,9 @@ return new class extends Migration
             $table->string('password');
             $table->timestamps();
 
-            //mendefinisikan foreign key pada kolom level_id mengacu pada kolom level_id
+            // foreign key constraints
             $table->foreign('level_id')->references('level_id')->on('m_level');
         });
-
     }
 
     /**
@@ -31,5 +30,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('m_user');
+        // Schema::table('m_user', function (Blueprint $table) {
+        //     //
+        // });
     }
 };

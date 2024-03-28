@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\KategoriModel;
 use Illuminate\Http\Request;
 use App\DataTables\KategoriDataTable;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 
 class KategoriController extends Controller
 {
@@ -13,20 +15,27 @@ class KategoriController extends Controller
         return $dataTable->render('kategori.index');
     }
 
-    public function create()
+    /**
+     * Show the form to create a new post.
+     */
+    public function create(): View
     {
         return view('kategori.create');
     }
 
-    public function store(Request $request)
+    /**
+     * Store a new post.
+     */
+    public function store(StorePostRequest $request): RedirectResponse
     {
-        KategoriModel::create([
-            'kategori_kode' => $request->kodeKategori,
-            'kategori_nama' => $request->namaKategori,
-        ]);
+        $validated = $request->validated();
+
+        $validated = $request->safe->only(['kodeKategori', 'namaKategori']);
+        $validated = $request->safe->except(['kodeKategori', 'namaKategori']);
 
         return redirect('/kategori');
     }
+
     public function edit($id)
     {
         $kategori = KategoriModel::find($id);
@@ -54,6 +63,7 @@ class KategoriController extends Controller
         $kategori->delete();
         return redirect('/kategori');
     }
+
 
 
 }
