@@ -9,7 +9,7 @@
     <div class="card-body">
         @empty($level)
         <div class="alert alert-danger alert-dismissible">
-            <h5><i class="icon fas fa-ban"></i> Kesalahan!</h5>
+            <h5><i class="icon fas fa-ban"></i> Error!</h5>
             Data yang Anda cari tidak ditemukan.
         </div>
         @else

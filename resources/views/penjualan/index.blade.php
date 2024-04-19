@@ -23,7 +23,7 @@
                             <select name="user_id" id="user_id" class="form-control" required>
                                 <option value="">- Semua -</option>
                                 @foreach ($user as $item)
-                                    @if (($item->level_id == 1) | ($item->level_id == 2) | ($item->level_id == 3))
+                                    @if (($item->level_id == 1) )
                                         <option value="{{ $item->user_id }}">{{ $item->username }}</option>
                                     @endif
                                 @endforeach
@@ -38,7 +38,7 @@
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Username Staff</th>
+                        <th>Staff</th>
                         <th>Pembeli</th>
                         <th>Kode Penjualan</th>
                         <th>Tanggal</th>
