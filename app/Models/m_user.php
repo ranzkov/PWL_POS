@@ -16,5 +16,7 @@ class m_user extends Model
         'level_id',
         'username',
         'password',
+        'created_at',
+        'updated_at'
     ];
 }
