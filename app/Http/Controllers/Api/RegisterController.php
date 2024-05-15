@@ -15,10 +15,12 @@ class RegisterController extends Controller
 
         // Set validation rules
         $validator = Validator::make($request->all(), [
-            'username' => 'required', // ensure usernames are unique in the 'users' table
+            'username' => 'required',
             'nama' => 'required',
-            'password' => 'required|min:5|confirmed', // password must have a confirmation field
-            'level_id' => 'required' // ensure the level_id exists in the 'levels' table
+            'password' => 'required|min:5|confirmed',
+            'level_id' => 'required',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+
         ]);
 
         // If validations fail
@@ -30,8 +32,10 @@ class RegisterController extends Controller
         $user = UserModel::create([
             'username' => $request->username,
             'nama' => $request->nama,
-            'password' => bcrypt($request->password), 
+            'password' => bcrypt($request->password),
             'level_id' => $request->level_id,
+            'image' => $request->image->hashName()
+
         ]);
 
         // Return response JSON if user is created
